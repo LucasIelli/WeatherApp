@@ -2,6 +2,7 @@ const previous = document.getElementById("previous");
 const next = document.getElementById("next");
 const main = document.querySelector("main");
 const list = document.querySelector("ul");
+
 const apiKey = "4bbff4a3c69a9b2c5ec037d55762eb79";
 const langage = "fr";
 const counter = 40;
@@ -27,7 +28,7 @@ function fetchingDatas() {
 
 async function displayDatas() {
   const calls = await fetchingDatas();
-  calls.list.forEach((call, index) => {
+  calls.list.forEach((call, index, e) => {
     const templateElement = document.importNode(
       document.querySelector("template").content,
       true
@@ -50,16 +51,21 @@ async function displayDatas() {
     )} km/h`;
 
     const div = templateElement.getElementById("date").parentElement;
-    div.classList.add(index);
+    div.setAttribute("id", `${index}`);
 
-    const listItem = document.createElement("li");
-    listItem.classList.add(index);
-    listItem.innerText = `${call.dt_txt.substring(
+    const listItemCreation = `<li id="${index}">${call.dt_txt.substring(
       5,
       7
-    )}/${call.dt_txt.substring(8, 10)} - ${call.dt_txt.substring(11, 13)}h`;
+    )}/${call.dt_txt.substring(8, 10)} - ${call.dt_txt.substring(
+      11,
+      13
+    )}h</li>`;
+    list.innerHTML += listItemCreation;
+    const listItem = document.getElementById(`${index}`);
 
-    list.appendChild(listItem);
+    if (listItem.id != div.id) {
+      return;
+    }
     main.appendChild(templateElement);
   });
 }
@@ -71,4 +77,9 @@ next.addEventListener("click", () => {
 
 previous.addEventListener("click", () => {
   main.scrollLeft -= main.clientWidth;
+});
+
+document.addEventListener("click", (e) => {
+  const buttonClickedId = e.target.id;
+  console.log(buttonClickedId);
 });

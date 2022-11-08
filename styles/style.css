@@ -15,7 +15,6 @@ li {
   width: 6rem;
   padding-top: 0.2rem;
   padding-bottom: 0.2rem;
-
   margin: 1px;
   text-align: center;
   border: 1px red solid;
@@ -36,11 +35,11 @@ h1 {
 }
 
 main {
-  width: calc(83% + 22px);
   display: flex;
   overflow-x: scroll;
   gap: 5px;
 }
+
 main::-webkit-scrollbar { 
   width: 0;
   height: 0;
